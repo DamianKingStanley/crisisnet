@@ -21,9 +21,8 @@
 .env.test.local
 .env.production.local
 .env
+keys/vertex-key.json
 
-keys/
-*.json
 
 # production
 /build
