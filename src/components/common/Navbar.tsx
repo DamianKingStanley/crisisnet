@@ -8,10 +8,11 @@ import { FaGithub, FaTwitter, FaLinkedin } from 'react-icons/fa';
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Alerts', href: '/alerts' },
-  { name: 'About', href: '/about' },
-  { name: 'Features', href: '/features' },
-  { name: 'How It Works', href: '/how-it-works' },
+  // { name: 'About', href: '/about' },
+  // { name: 'Features', href: '/features' },
   { name: 'Contact', href: '/contact' },
+  { name: 'Dashboard', href: '/dashboard' },
+
 ];
 
 const socialLinks = [

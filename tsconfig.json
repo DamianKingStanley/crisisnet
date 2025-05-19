@@ -2,8 +2,8 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@models/*": [
-        "models/*"
+      "@src/*": [
+        "src/*"
       ]
     },
     "target": "ES2017",

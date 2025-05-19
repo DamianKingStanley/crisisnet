@@ -137,7 +137,7 @@ export default function Features() {
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
               whileHover={cardHover}
-              className={`group relative bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 cursor-default overflow-hidden`}
+              className={`group relative bg-white rounded-2xl p-8  hover:shadow-2xl transition-all duration-300 border border-gray-300 cursor-default overflow-hidden`}
             >
               {/* Hover effect background */}
               <div className={`absolute inset-0 ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>

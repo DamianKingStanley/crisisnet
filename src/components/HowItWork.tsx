@@ -143,7 +143,7 @@ export default function HowItWorks() {
                 whileInView="visible"
                 viewport={{ once: true, margin: "-50px" }}
                 whileHover={cardHover}
-                className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 cursor-default"
+                className="group relative bg-white rounded-2xl p-8 shadow-sm  transition-all duration-300 border border-gray-100 cursor-default"
               >
                 {/* Step number */}
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">
@@ -185,6 +185,7 @@ export default function HowItWorks() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
             className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+            onClick={() => window.location.href = '/login'}
           >
             Get Started with CrisisNet
           </motion.button>

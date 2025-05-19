@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import * as vertex from '@google-cloud/aiplatform';
 
-// Point to your service account key file
+// Point to service account key file
 // const keyFilePath = path.join(process.cwd(), 'keys', 'vertex-key.json');
 const keyFilePath = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 
@@ -18,7 +18,7 @@ const client = new PredictionServiceClient({
 export default client;
 
 
-const location = 'us-central1'; // or your region
+const location = 'us-central1';
 const model = 'textembedding-gecko@001';
 
 // Load environment variables
@@ -27,9 +27,10 @@ dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable in .env.local');
+  throw new Error('MONGODB_URI is not defined in .env file');
 }
 
+// Embedding
 export async function getEmbedding(text: string): Promise<number[]> {
   const request = {
     endpoint: `projects/rosy-proposal-420211/locations/${location}/publishers/google/models/${model}`,
@@ -53,7 +54,7 @@ export async function getEmbedding(text: string): Promise<number[]> {
   return embeddings;
 }
 
-// 1. Define the Alert model directly in this file
+// Alert Model
 interface IAlert extends Document {
   reliefwebId: string;
   title: string;
@@ -101,7 +102,7 @@ const AlertSchema = new Schema<IAlert>({
 // Get existing model or create new one
 const Alert: Model<IAlert> = mongoose.models.Alert || mongoose.model<IAlert>('Alert', AlertSchema);
 
-// 2. Define ReliefWeb interfaces
+// ReliefWeb Model
 interface ReliefWebDisaster {
   id: string;
   fields: {
@@ -123,7 +124,7 @@ interface ReliefWebResponse {
   data: ReliefWebDisaster[];
 }
 
-// 3. Database connection function
+// Database connection function
 async function connectToDatabase() {
   if (mongoose.connection.readyState >= 1) {
     return;

@@ -81,13 +81,13 @@ export default function Hero() {
   return (
     <>
       <Head>
-        <link rel="preload" href="/iamges/radient-bg.avif" as="image" />
+        <link rel="preload" href="/images/gradient-bg.avif'" as="image" />
       </Head>
       
       <section 
         className="relative bg-gradient-to-r from-indigo-600 via-purple-700 to-pink-600 text-white min-h-[100vh] flex flex-col justify-center px-6 md:px-20 overflow-hidden"
         style={{
-          // backgroundImage: "url('/images/gradient-bg.avif')",
+          backgroundImage: "url('/images/herobg.gif')",
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
