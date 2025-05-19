@@ -7,15 +7,15 @@ import { useRouter } from 'next/navigation';
 import MapView from '../../components/MapView';
 import { Alert } from '../../types/alert';
 
-
-// interface Alert {
-//   _id: string;
-//   title: string;
-//   date: string;
-// }
+interface AlertWithLocation extends Alert {
+  location: {
+    lat: number;
+    lng: number;
+  };
+}
 
 export default function Dashboard() {
-  const [alerts, setAlerts] = useState<Alert[]>([]);
+  const [alerts, setAlerts] = useState<AlertWithLocation[]>([]);
   const router = useRouter();
 
   const logout = () => {
@@ -26,14 +26,16 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchAlerts = async () => {
       try {
-        const res = await axios.get('/api/alert'); 
-        const mappedAlerts = res.data.alerts.map((alert: Alert & { latitude?: number; longitude?: number }) => ({
-          ...alert,
-          location: {
-            lat: alert.latitude || 0,
-            lng: alert.longitude || 0,
-          },
-        }));
+        const res = await axios.get('/api/alert');
+        const mappedAlerts: AlertWithLocation[] = res.data.alerts.map(
+          (alert: Alert & { latitude?: number; longitude?: number }) => ({
+            ...alert,
+            location: {
+              lat: alert.latitude || 0,
+              lng: alert.longitude || 0,
+            },
+          })
+        );
         setAlerts(mappedAlerts);
       } catch (error) {
         console.error('Failed to fetch alerts:', error);
@@ -56,14 +58,17 @@ export default function Dashboard() {
 
       <div className="bg-white shadow rounded-lg p-4">
         <ul>
-        {Array.isArray(alerts) && alerts.map((alert: Alert) => (
+          {alerts.map((alert) => (
             <li key={alert._id} className="py-2">
-                <h3 className="font-medium">{alert.title}</h3>
-                <p className="text-sm text-gray-600">{alert.date}</p>
+              <h3 className="font-medium">{alert.title}</h3>
+              <p className="text-sm text-gray-600">{alert.date}</p>
             </li>
-            ))}
-             <MapView alerts={alerts} />
+          ))}
         </ul>
+
+        <div className="mt-6">
+          <MapView alerts={alerts} />
+        </div>
       </div>
     </div>
   );

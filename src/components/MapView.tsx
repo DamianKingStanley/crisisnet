@@ -8,9 +8,6 @@ import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import { Alert } from '../types/alert';
 
-
-// Fix marker icon issue in Next.js
-// Type assertion to unknown before casting to any to avoid 'any' directly
 delete (L.Icon.Default.prototype as unknown as { _getIconUrl?: unknown })._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: markerIcon2x,
@@ -18,35 +15,38 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
-// interface Alert {
-//   _id: string;
-//   title: string;
-//   country: string;
-//   date: string;
-//   location: { lat: number; lng: number };
-// }
+interface AlertWithLocation extends Alert {
+  location: {
+    lat: number;
+    lng: number;
+  };
+}
 
 interface MapViewProps {
-  alerts: Alert[];
+  alerts: AlertWithLocation[];
 }
 
 export default function MapView({ alerts }: MapViewProps) {
- 
+  const defaultCenter: [number, number] = [0, 0];
+  const center: [number, number] =
+    alerts.length > 0
+      ? [
+          alerts.reduce((sum, alert) => sum + alert.location.lat, 0) / alerts.length,
+          alerts.reduce((sum, alert) => sum + alert.location.lng, 0) / alerts.length,
+        ]
+      : defaultCenter;
 
   return (
     <div className="h-[500px] w-full rounded-lg shadow">
-      <MapContainer className="h-full w-full z-0">
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+      <MapContainer center={center} zoom={5} className="h-full w-full z-0">
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {alerts.map((alert) => (
-          <Marker
-            key={alert._id}
-            position={[alert.location.lat, alert.location.lng]}
-          >
+          <Marker key={alert._id} position={[alert.location.lat, alert.location.lng]}>
             <Popup>
-              <strong>{alert.title}</strong><br />
-              {alert.country}<br />
+              <strong>{alert.title}</strong>
+              <br />
+              {alert.country}
+              <br />
               {new Date(alert.date).toLocaleDateString()}
             </Popup>
           </Marker>
