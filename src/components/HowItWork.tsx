@@ -4,6 +4,8 @@ import { motion, useAnimation } from 'framer-motion';
 import { ChatBubbleBottomCenterTextIcon, MagnifyingGlassIcon, BellAlertIcon } from '@heroicons/react/24/outline';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { useRouter } from 'next/navigation';
+
 
 const steps = [
   {
@@ -29,7 +31,11 @@ const steps = [
   },
 ];
 
+
+
 export default function HowItWorks() {
+    const router = useRouter();
+  
   const controls = useAnimation();
   const [ref, inView] = useInView({
     threshold: 0.2,
@@ -82,6 +88,10 @@ export default function HowItWorks() {
       ease: "easeInOut"
     }
   };
+
+  const getStarted = () => {
+  router.push('/login');
+}
 
   return (
     <section className="relative py-28 px-6 md:px-20 overflow-hidden bg-gradient-to-b from-indigo-50 to-white">
@@ -185,7 +195,7 @@ export default function HowItWorks() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
             className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-            onClick={() => window.location.href = '/login'}
+           onClick={getStarted}  // 
           >
             Get Started with CrisisNet
           </motion.button>
