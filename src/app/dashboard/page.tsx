@@ -4,9 +4,12 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
-import MapView from '../../components/MapView';
-import { Alert } from '../../types/alert';
 
+import { Alert } from '../../types/alert';
+import dynamic from 'next/dynamic';
+
+
+const MapView = dynamic(() => import('../../components/MapView'), { ssr: false });
 interface AlertWithLocation extends Alert {
   location: {
     lat: number;
